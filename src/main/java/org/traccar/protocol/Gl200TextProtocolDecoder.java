@@ -232,6 +232,9 @@ public class Gl200TextProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_RSSI, Integer.parseInt(v[index - 1]));
         }
         index += 1; // signal quality
+        if (model.equals("GL320M")) {
+            position.set(Position.KEY_CHARGE, "1".equals(v[index]));
+        }
         index += 1; // external power supply
 
         if (v[index + 1].length() >= 12) {

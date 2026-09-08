@@ -30,6 +30,16 @@ public class Gl200TextProtocolDecoderTest extends ProtocolTest {
                 "+RESP:GTEPF,C30302,860201067023286,,0,0.0,0,449.0,8.540000,47.380000,20260904120120,0228,0002,9D08,013D9905,,20260907112626,3E76$"),
                 Position.KEY_CHARGE, false);
 
+        // GL320M GTINF: charge reflects the external power supply field - plugged in and
+        // full (Charging=0) is still on the charger; unplugged is an explicit false.
+        verifyAttribute(decoder, buffer(
+                "+RESP:GTINF,C30302,860201067023286,,41,89880000000000000000,22,99,1,0.0,,4.13,0,1,2,,,20260904120120,100,,25.0,,,20260905220117,3D01$"),
+                Position.KEY_CHARGE, true);
+
+        verifyAttribute(decoder, buffer(
+                "+RESP:GTINF,C30302,860201067023286,,41,89880000000000000000,24,99,0,0.0,,3.75,0,1,2,,,20260904120120,26,,23.4,,,20260907020252,3E59$"),
+                Position.KEY_CHARGE, false);
+
         verifyPositions(decoder, buffer(
                 "+RESP:GTFRI,DF0200,868487004353181,cv100,14051,10,1,0,0.0,0,264.1,114.015515,22.537178,20210608064328,0460,0001,25F8,061A7D02,,0.0,,,,100,21,,,,20210608144354,32DB$"));
 
