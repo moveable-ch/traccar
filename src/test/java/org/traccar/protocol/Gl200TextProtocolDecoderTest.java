@@ -11,6 +11,11 @@ public class Gl200TextProtocolDecoderTest extends ProtocolTest {
 
         var decoder = inject(new Gl200TextProtocolDecoder(null));
 
+        // GTINF: the charge flag is the Charging field, not the LED field that follows it.
+        verifyAttribute(decoder, buffer(
+                "+RESP:GTINF,1A0800,860599000773978,GL300,41,89701016426133851978,17,0,0,26.6,,3.90,0,1,0,0,0,20161003184043,69,1,44,,,20161004040811,022C$"),
+                Position.KEY_CHARGE, null);
+
         verifyPositions(decoder, buffer(
                 "+RESP:GTFRI,DF0200,868487004353181,cv100,14051,10,1,0,0.0,0,264.1,114.015515,22.537178,20210608064328,0460,0001,25F8,061A7D02,,0.0,,,,100,21,,,,20210608144354,32DB$"));
 
